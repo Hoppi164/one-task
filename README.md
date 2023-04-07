@@ -11,7 +11,8 @@
 
 ## MVP:
 
-- [ ] Create Card Component
+- [x] Create Card Component
+  - [] Make card reactive size
 - [ ] Create routes -- Will there be multiple routes?
 - [ ] Create Functionality to "Create" task / View all tasks
 - [ ] Create Functionality to "Plan" tasks by swiping up
