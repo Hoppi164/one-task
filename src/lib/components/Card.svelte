@@ -36,13 +36,14 @@
 		background: var(--card-image);
 		aspect-ratio: 8.22 / 11.22;
 		background-repeat: no-repeat;
-		height: 50%;
+		height: 30vh;
 		background-size: cover;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		border-radius: 8px;
 		box-shadow: 0 0 2px 2px darkgrey;
+		cursor: grab;
 	}
 
 	.cardHeader {
@@ -51,7 +52,7 @@
 	}
 	.cardFooter {
 		width: 100%;
-		background-color: rgba(255, 255, 255, 0.4);
+		background-color: rgba(255, 255, 255, 0.7);
 		margin-bottom: 16px;
 		display: flex;
 		flex-direction: column;
@@ -71,6 +72,9 @@
 		font-size: 18pt;
 	}
 
+	.dragging {
+		cursor: grabbing;
+	}
 	.points {
 		font-family: monospace;
 		font-size: 16pt;
