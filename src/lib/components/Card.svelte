@@ -36,7 +36,7 @@
 		background: var(--card-image);
 		aspect-ratio: 8.22 / 11.22;
 		background-repeat: no-repeat;
-		height: 30vh;
+		/* height: 30vh; */
 		background-size: cover;
 		display: flex;
 		flex-direction: column;
@@ -52,7 +52,7 @@
 	}
 	.cardFooter {
 		width: 100%;
-		background-color: rgba(255, 255, 255, 0.7);
+		background-color: rgba(111, 111, 111, 0.7);
 		margin-bottom: 16px;
 		display: flex;
 		flex-direction: column;
@@ -72,9 +72,9 @@
 		font-size: 18pt;
 	}
 
-	.dragging {
+	/* .dragging {
 		cursor: grabbing;
-	}
+	} */
 	.points {
 		font-family: monospace;
 		font-size: 16pt;
@@ -83,5 +83,6 @@
 		align-items: center;
 		gap: 4px;
 		padding: 4px;
+		color: aliceblue;
 	}
 </style>

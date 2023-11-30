@@ -31,6 +31,7 @@
 	"type": "module",
 	"dependencies": {
 		"@picocss/pico": "^1.5.7",
+		"@react2svelte/swipeable": "^0.1.4",
 		"svelte-dnd-action": "^0.9.33"
 	}
 }
