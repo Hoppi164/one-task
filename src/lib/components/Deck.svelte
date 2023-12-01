@@ -3,19 +3,45 @@
 	import { flip } from 'svelte/animate';
 	import Card from './Card.svelte';
 	import { swipeable } from '@react2svelte/swipeable';
+	import Points from './Points.svelte';
+	import { numPoints, animationDuration } from '$lib/stores/mainstore';
 	export let items;
 	$: itemsFiltered = items.filter((item) => item.status === 'Todo');
-	$: itemsReversed = [...itemsFiltered].reverse();
 
-	const flipDurationMs = 1000;
+	function animateCardRight(e) {
+		const card = e.srcElement.querySelector('.card');
+		card.animate(
+			[{ transform: 'translateX(0) rotate(0)' }, { transform: 'translateX(150%) rotate(45deg)' }],
+			{
+				duration: $animationDuration,
+				easing: 'ease-in-out',
+				fill: 'forwards'
+			}
+		);
+	}
+
+	function animateCardUp(e) {
+		const card = e.srcElement.querySelector('.card');
+		card.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-150%)' }], {
+			duration: $animationDuration,
+			easing: 'ease-in-out',
+			fill: 'forwards'
+		});
+	}
+
+	function animatePoints(e) {
+		const point = e.srcElement.querySelector('.point');
+		point.animate([{ transform: 'translateX(75vw) translateY(-45vh)', zIndex: 1 }], {
+			duration: $animationDuration,
+			easing: 'ease-in-out',
+			fill: 'forwards'
+		});
+	}
 
 	function getTopCardIndex() {
 		const topCard = itemsFiltered[0];
-		console.log({ topCard });
 		const index = items.findIndex((item) => item.id === topCard.id);
-		console.log({ index });
-		console.log(items[index]);
-		return items.findIndex((item) => item.id === topCard.id);
+		return index;
 	}
 
 	function handler(e) {
@@ -29,9 +55,18 @@
 		const direction = e.detail.dir;
 
 		if (direction === 'Right' && e.detail.absX >= 200) {
-			items[index].status = 'Done';
+			console.log('animating');
+			animateCardRight(e);
+			animatePoints(e);
+			setTimeout(() => {
+				items[index].status = 'Done';
+				numPoints.update((n) => n + items[index].points);
+			}, $animationDuration);
 		} else if (direction === 'Up') {
-			items[index].status = 'Skipped';
+			animateCardUp(e);
+			setTimeout(() => {
+				items[index].status = 'Skipped';
+			}, $animationDuration);
 		}
 		console.log(items);
 	}
@@ -40,11 +75,14 @@
 <section class="deck">
 	{#each itemsFiltered as item (item.id)}
 		<div
-			animate:flip={{ duration: flipDurationMs }}
+			animate:flip={{ duration: $animationDuration }}
 			use:swipeable={{ delta: 100, preventScrollOnSwipe: true }}
 			on:swiped={handler}
 		>
 			<Card task={item.name} numPoints={item.points} />
+			<div class="point">
+				<Points pointType="star" />
+			</div>
 		</div>
 	{/each}
 
@@ -54,10 +92,6 @@
 	{/if}
 </section>
 
-<!-- Todo -->
-<!-- Re-implement this with swipable instead of drag and drop -->
-
-<!-- https://github.com/react2svelte/swipeable -->
 <style>
 	:global(body) {
 		overflow-y: hidden;
@@ -76,5 +110,16 @@
 	.deck > div {
 		height: 80%;
 		width: 80%;
+	}
+
+	.point {
+		position: absolute;
+		/* top: 0; */
+		/* left: 0; */
+		z-index: -1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: -15%;
 	}
 </style>

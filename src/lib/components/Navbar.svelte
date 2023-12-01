@@ -1,7 +1,6 @@
 <script>
 	import Points from './Points.svelte';
-	// export let totalPoints = 0;
-	// export let isActive = false;
+	import { numPoints } from '$lib/stores/mainstore';
 </script>
 
 <nav>
@@ -9,9 +8,15 @@
 		<li><strong>⚙️</strong></li>
 	</ul>
 	<ul>
-		<li><Points /></li>
+		<li class="pointsCounter"><Points /><strong>{$numPoints}</strong></li>
 	</ul>
 </nav>
 
 <style>
+	.pointsCounter {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 4px;
+	}
 </style>
